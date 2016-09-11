@@ -1,3 +1,7 @@
+import logging
+
+logging.basicConfig(filename="vhdl2ilang.log", level=logging.DEBUG)
+
 import sys
 from antlr4 import *
 from vhdlLexer import vhdlLexer

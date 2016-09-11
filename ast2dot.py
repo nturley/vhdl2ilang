@@ -1,4 +1,5 @@
-
+import logging
+logging.basicConfig(filename="vhdl2ilang.log", level=logging.DEBUG)
 
 
 
@@ -22,7 +23,7 @@ digraph {
             continue
         dotname = 'n' + str(auto_index)
         auto_index += 1
-        f.write('  ' + dotname +' [label="' + node.name() + '"];\n')
+        f.write('  ' + dotname +' [label="' + node.__repr__() + '"];\n')
         if len(ancestry)>0:
             f.write('  ' + ancestry[-1] + ' -> ' + dotname + '\n')
         ancestry.append(dotname)
@@ -32,8 +33,10 @@ digraph {
 def visit(node):
     """ recursive generator
     every node should yield itself and EXIT """
+    logging.debug(node.__repr__()+', children: '+str(len(node.children)))
     yield node
     for child in node.children:
+        logging.debug(child.__repr__())
         for r in visit(child):
             yield r
     yield EXIT
